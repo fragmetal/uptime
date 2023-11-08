@@ -6,7 +6,7 @@ ENV DEBCONF_NONINTERACTIVE_SEEN=true
 
 # Install necessary packages
 RUN apt update && apt upgrade -y && \
-    apt install -y systemd software-properties-common lsb-release nano tar curl git htop neofetch shellinabox
+    apt install -y systemd software-properties-common lsb-release nano tar curl screen git htop neofetch shellinabox
 
 # Automatically configure the timezone (based on VPS location)
 RUN echo "tzdata tzdata/Areas select Etc" | debconf-set-selections && \
@@ -38,13 +38,14 @@ RUN ln -s /usr/bin/python3.11 /usr/bin/python && \
     echo "export PATH=/usr/local/lib/nodejs/bin:\$PATH" >> ~/.bashrc && \
     bash -c "source ~/.bashrc"
     
-RUN git clone https://github.com/louislam/uptime-kuma.git
-
 # Clean up
 RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Expose the SSH port
 EXPOSE 4200
 
-# Start shellinabox
-CMD ["/usr/bin/shellinaboxd", "-t", "-s", "/:LOGIN"]
+# Start shellinabox and install Cloudflare service
+CMD /usr/bin/shellinaboxd -t -s /:LOGIN && \
+    git clone https://github.com/louislam/uptime-kuma.git && \
+    cd uptime-kuma && npm install npm@9 -g && npm run setup && screen -dmS uptime-kuma node server/server.js && \
+    cloudflared service install eyJhIjoiN2Q4ZGI3YTgzODU5MjQxZDdmMDI4ZmM2MjhkOTcxNmMiLCJ0IjoiMmYzMWQ2NTItN2IwNS00Mzc1LTliYzEtYmI4OGNiYmY1MjU4IiwicyI6Ik4yVXdaREl5TkRRdFpXUmpOaTAwWTJZeExUaGpaREV0TURVM05EbG1ZekJpTnpkbCJ9
