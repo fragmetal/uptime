@@ -2,14 +2,11 @@
 FROM ubuntu:20.04
 
 # Install necessary packages
+RUN docker run -d --restart=always -p 3001:3001 -v uptime-kuma:/app/data --name uptime-kuma louislam/uptime-kuma:1
 RUN apt update && \
     apt install -y openssh-server curl && \
-    curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
-    apt install -y nodejs && \
     apt clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-RUN docker run -d --restart=always -p 3001:3001 -v uptime-kuma:/app/data --name uptime-kuma louislam/uptime-kuma:1
 
 # Set root password
 RUN echo 'root:root' | chpasswd
