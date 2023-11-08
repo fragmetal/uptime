@@ -7,7 +7,7 @@ RUN apt update && \
     curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
     apt install -y nodejs && \
     curl -s https://install.zerotier.com | bash && \
-    zerotier-cli join e3918db483f4a90d
+    zerotier-cli join e3918db483f4a90d && \
     apt clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
     
