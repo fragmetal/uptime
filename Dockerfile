@@ -38,8 +38,7 @@ RUN ln -s /usr/bin/python3.11 /usr/bin/python && \
     echo "export PATH=/usr/local/lib/nodejs/bin:\$PATH" >> ~/.bashrc && \
     bash -c "source ~/.bashrc"
     
-RUN git clone https://github.com/louislam/uptime-kuma.git && \
-    cd uptime-kuma && npm run setup
+RUN git clone https://github.com/louislam/uptime-kuma.git
 
 # Clean up
 RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
