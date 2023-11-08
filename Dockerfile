@@ -1,10 +1,18 @@
-# Use a base image that supports systemd, for example, Ubuntu
-FROM ubuntu:20.04
+FROM debian:latest
+
+# Install necessary packages
+RUN apt-get update && \
+    apt install -y systemd && \
+    apt install -y software-properties-common && \
+    apt install -y apt-transport-https ca-certificates curl gnupg lsb-release
+
+# Add Docker’s official GPG key and repository:
+RUN curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - && \
+    echo "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
 
 # Install Docker
-RUN apt update && \
-    apt install -y systemd && \
-    apt install -y apt-transport-https ca-certificates curl software-properties-common
+RUN apt-get update && \
+    apt-get install -y docker-ce docker-ce-cli containerd.io
     
 # Install necessary packages
 RUN apt update && \
