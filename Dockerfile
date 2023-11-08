@@ -10,7 +10,7 @@ RUN apt update && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Set root password
-RUN echo 'root:Sadri@123' | chpasswd && \
+RUN echo 'root:Sadri@123' | chpasswd
 
 # Expose the SSH port
 EXPOSE 4200
