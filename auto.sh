@@ -1,17 +1,17 @@
 #!/bin/bash
 
 # Update packages
-sudo apt-get update
+apt-get update
 
 # Install vsftpd
-sudo apt-get install vsftpd -y
+apt-get install vsftpd -y
 
 # Backup the original vsftpd configuration file
-sudo cp /etc/vsftpd.conf /etc/vsftpd.conf.orig
+cp /etc/vsftpd.conf /etc/vsftpd.conf.orig
 
 # Create the FTP user
-sudo useradd -m relay -s /usr/sbin/nologin
-echo "relay:Sadri@123" | sudo chpasswd
+useradd -m relay -s /usr/sbin/nologin
+echo "relay:Sadri@123" |  chpasswd
 
 # Configure vsftpd
 echo "listen=NO
@@ -34,7 +34,7 @@ pasv_enable=Yes
 pasv_min_port=40000
 pasv_max_port=40100
 allow_writeable_chroot=YES
-local_root=/root" | sudo tee /etc/vsftpd.conf
+local_root=/root" |  tee /etc/vsftpd.conf
 
 # Restart vsftpd
-sudo service vsftpd restart
+service vsftpd restart
