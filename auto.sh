@@ -15,6 +15,7 @@ echo "relay:Sadri@123" |  chpasswd
 
 # Configure vsftpd
 echo "listen=NO
+listen_port=2121
 listen_ipv6=YES
 anonymous_enable=NO
 local_enable=YES
