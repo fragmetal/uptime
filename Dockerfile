@@ -23,7 +23,7 @@ RUN curl -O https://nodejs.org/download/release/v18.18.2/node-v18.18.2-linux-x64
 # Install Python 3.11
 RUN add-apt-repository ppa:deadsnakes/ppa && \
     apt update && apt upgrade -y && \
-    apt install -y python3.11
+    apt install -y python3.11 python3.11-venv
 
 # Install pip for Python 3.11
 RUN curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
