@@ -23,7 +23,8 @@ RUN curl -O https://nodejs.org/download/release/v18.18.2/node-v18.18.2-linux-x64
 # Install Python 3.11
 RUN add-apt-repository ppa:deadsnakes/ppa && \
     apt update && apt upgrade -y && \
-    apt install -y python3.11 python3.11-venv
+    apt install -y python3.11 python3.11-venv && \
+    python -m venv venv
 
 # Install pip for Python 3.11
 RUN curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
@@ -37,6 +38,7 @@ RUN ln -s /usr/bin/python3.11 /usr/bin/python && \
     echo 'root:Sadri@123' | chpasswd && \
     echo "alias ll='ls -l'" > /etc/profile.d/ll.sh && \
     echo "export PATH=/usr/local/lib/nodejs/bin:\$PATH" >> ~/.bashrc && \
+    echo "source venv/bin/activate" >> ~/.bashrc && \
     bash -c "source ~/.bashrc"
     
 # Clean up
