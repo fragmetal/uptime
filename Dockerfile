@@ -6,8 +6,7 @@ ENV DEBCONF_NONINTERACTIVE_SEEN=true
 
 # Install necessary packages
 RUN apt update && apt upgrade -y && \
-    apt install -y systemd software-properties-common lsb-release nano tar curl screen git htop neofetch nginx shellinabox && \
-    service nginx stop && service nginx start
+    apt install -y systemd software-properties-common lsb-release nano tar curl screen git htop neofetch nginx shellinabox
 
 # Automatically configure the timezone (based on VPS location)
 RUN echo "tzdata tzdata/Areas select Etc" | debconf-set-selections && \
