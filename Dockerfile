@@ -22,7 +22,7 @@ RUN curl -O https://nodejs.org/download/release/v18.18.2/node-v18.18.2-linux-x64
 # Install Python 3.11
 RUN add-apt-repository ppa:deadsnakes/ppa && \
     apt update && apt upgrade -y && \
-    apt install -y python3.11 python3.11-venv && curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
+    apt install -y python3.11 python3.11-venv && python -m venv venv && curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
     python3.11 get-pip.py
 
 # Install Cloudflare service
@@ -34,7 +34,7 @@ RUN ln -s /usr/bin/python3.11 /usr/bin/python && \
     echo "alias ll='ls -l'" > /etc/profile.d/ll.sh && \
     echo "export PATH=/usr/local/lib/nodejs/bin:\$PATH" >> ~/.bashrc && \
     echo "source venv/bin/activate" >> ~/.bashrc && \
-    echo "if [ ! -d \"\$HOME/project\" ]; then git clone https://github.com/fragmetal/project.git \$HOME/project; pip install -r requirements.txt fi" && \
+    echo "if [ ! -d \"\$HOME/project\" ]; then git clone https://github.com/fragmetal/project.git \$HOME/project; pip install -r requirements.txt fi" >> ~/.bashrc && \
     bash -c "source ~/.bashrc"
     
 # Clean up
