@@ -34,9 +34,7 @@ RUN ln -s /usr/bin/python3.11 /usr/bin/python && \
     echo "alias ll='ls -l'" > /etc/profile.d/ll.sh && \
     echo "export PATH=/usr/local/lib/nodejs/bin:\$PATH" >> ~/.bashrc && \
     echo "source venv/bin/activate" >> ~/.bashrc && \
-    echo "if [ ! -d \"\$HOME/project\" ]; then
-        git clone https://github.com/fragmetal/project.git \$HOME/project; pip install -r requirements.txt
-    fi" && \
+    echo "if [ ! -d \"\$HOME/project\" ]; then git clone https://github.com/fragmetal/project.git \$HOME/project; pip install -r requirements.txt fi" && \
     bash -c "source ~/.bashrc"
     
 # Clean up
