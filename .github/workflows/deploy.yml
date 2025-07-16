@@ -20,8 +20,14 @@ jobs:
           node-version: 18
           cache: 'npm'
           
-      - name: Install dependencies
-        run: npm install
+      - name: Install dependencies and generate lockfile
+        run: |
+          npm install
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git add package-lock.json
+          git commit -m "Update package-lock.json" || echo "No changes to package-lock.json"
+          git push
           
       - name: Build
         run: |
@@ -34,5 +40,5 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
           publish_branch: gh-pages
-          allow_empty_commit: false  # Corrected parameter name
+          allow_empty_commit: false
           keep_files: false
