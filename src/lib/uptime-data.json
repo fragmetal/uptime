@@ -6,10 +6,16 @@
       "checkInterval": 5,
       "status": "up",
       "uptime": 100,
-      "responseTime": 0,
-      "lastChecked": "",
-      "history": []
+      "responseTime": 1088,
+      "lastChecked": "2025-07-16T09:25:45.902Z",
+      "history": [
+        {
+          "timestamp": "2025-07-16T09:25:45.902Z",
+          "status": "up",
+          "responseTime": 1088
+        }
+      ]
     }
   ],
-  "lastUpdated": ""
+  "lastUpdated": "2025-07-16T09:25:45.902Z"
 }
