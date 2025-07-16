@@ -20,19 +20,28 @@ jobs:
           node-version: 18
           cache: 'npm'
           
-      - name: Install dependencies and generate lockfile
+      - name: Check for package.json changes
+        id: package-check
+        run: |
+          git diff --exit-code package.json || echo "changed=true" >> $GITHUB_OUTPUT
+          
+      - name: Update dependencies if needed
+        if: steps.package-check.outputs.changed == 'true'
         run: |
           npm install
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
           git add package-lock.json
-          git commit -m "Update package-lock.json" || echo "No changes to package-lock.json"
+          git commit -m "Update package-lock.json"
           git push
+          
+      - name: Install dependencies
+        run: npm ci
           
       - name: Build
         run: |
           npm run build
-          ls -la dist/  # Verify build output
+          ls -la dist/
           
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3
