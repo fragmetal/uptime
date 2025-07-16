@@ -6,8 +6,8 @@
       "checkInterval": 5,
       "status": "up",
       "uptime": 100,
-      "responseTime": 986,
-      "lastChecked": "2025-07-16T09:52:26.521Z",
+      "responseTime": 1061,
+      "lastChecked": "2025-07-16T10:16:10.376Z",
       "history": [
         {
           "timestamp": "2025-07-16T09:25:45.902Z",
@@ -23,9 +23,14 @@
           "timestamp": "2025-07-16T09:52:26.521Z",
           "status": "up",
           "responseTime": 986
+        },
+        {
+          "timestamp": "2025-07-16T10:16:10.376Z",
+          "status": "up",
+          "responseTime": 1061
         }
       ]
     }
   ],
-  "lastUpdated": "2025-07-16T09:52:26.521Z"
+  "lastUpdated": "2025-07-16T10:16:10.376Z"
 }
