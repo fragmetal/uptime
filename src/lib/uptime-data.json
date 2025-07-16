@@ -3,12 +3,13 @@
     {
       "name": "Power#3745",
       "url": "https://507ab6b2-a51f-490e-9363-960390d518db-00-3pgweb6uweae0.pike.replit.dev/",
-      "checkInterval": 5
-    },
-    {
-      "name": "Another Site",
-      "url": "https://anothersite.com",
-      "checkInterval": 15
+      "checkInterval": 5,
+      "status": "up",
+      "uptime": 100,
+      "responseTime": 0,
+      "lastChecked": "",
+      "history": []
     }
-  ]
+  ],
+  "lastUpdated": ""
 }

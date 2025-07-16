@@ -4,9 +4,10 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
+    "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "check": "node src/lib/github.js"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.11",

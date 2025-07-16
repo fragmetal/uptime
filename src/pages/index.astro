@@ -1,45 +1,62 @@
 ---
-import { fetchUptimeData } from '../lib/github';
-const uptimeData = await fetchUptimeData();
+// src/pages/index.astro
+import Layout from '../layouts/Layout.astro';
+import UptimeStatus from '../components/UptimeStatus.astro';
+import uptimeData from '../lib/uptime-data.json';
+
+// Define a type-safe status order mapping
+const statusOrder: Record<string, number> = {
+  up: 0,
+  unknown: 1,
+  down: 2
+};
+
+// Sort sites by status (up first, then unknown, then down)
+const sortedSites = [...uptimeData.sites].sort((a, b) => {
+  // Use type assertion or fallback for unknown statuses
+  const aStatus = a.status?.toLowerCase() as keyof typeof statusOrder || 'unknown';
+  const bStatus = b.status?.toLowerCase() as keyof typeof statusOrder || 'unknown';
+  
+  return (statusOrder[aStatus] || 1) - (statusOrder[bStatus] || 1);
+});
 ---
 
-<html lang="en">
-<head>
-  <title>Uptime Monitor</title>
-</head>
-<body>
-  <h1>Uptime Status</h1>
-  
-  <div class="sites">
-    {uptimeData?.sites.map(site => (
-      <div class={`site ${site.status}`}>
-        <h2>{site.name}</h2>
-        <p>URL: <a href={site.url} target="_blank">{site.url}</a></p>
-        <p>Status: <span class="status">{site.status.toUpperCase()}</span></p>
-        <p>Last checked: {new Date(site.lastChecked).toLocaleString()}</p>
-        {site.responseTime && <p>Response time: {site.responseTime}ms</p>}
-      </div>
-    ))}
-  </div>
-</body>
-</html>
+<Layout title="Uptime Monitor">
+  <main class="uptime-container">
+    <h1>Website Status Monitor</h1>
+    <p class="last-updated">Last updated: {new Date(uptimeData.lastUpdated).toLocaleString()}</p>
+    
+    <div class="status-grid">
+      {sortedSites.map(site => (
+        <UptimeStatus site={site} />
+      ))}
+    </div>
+  </main>
+</Layout>
 
 <style>
-  .site {
-    padding: 1rem;
-    margin: 1rem 0;
-    border-radius: 4px;
+  .uptime-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    color: #333;
   }
-  .up {
-    background: #e6f7e6;
-    border: 1px solid #2ecc40;
+  
+  h1 {
+    text-align: center;
+    margin-bottom: 1rem;
+    color: #2d3748;
   }
-  .down {
-    background: #ffebeb;
-    border: 1px solid #ff4136;
+  
+  .last-updated {
+    text-align: center;
+    color: #718096;
+    margin-bottom: 2rem;
   }
-  .status {
-    font-weight: bold;
-    text-transform: uppercase;
+  
+  .status-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
   }
 </style>

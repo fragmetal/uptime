@@ -1,0 +1,39 @@
+---
+// src/components/UptimeStatus.astro
+const { site } = Astro.props;
+---
+
+<div class={`status-card ${site.status}`}>
+  <div class="status-header">
+    <h2>{site.name}</h2>
+    <a href={site.url} target="_blank" rel="noopener noreferrer" class="site-url">
+      {new URL(site.url).hostname}
+    </a>
+  </div>
+  
+  <div class="status-details">
+    <p>Status: <span class="status-badge">{site.status}</span></p>
+    <p>Uptime: {site.uptime}%</p>
+    <p>Last checked: {new Date(site.lastChecked).toLocaleString()}</p>
+    {site.responseTime >= 0 && <p>Response time: {site.responseTime}ms</p>}
+    <p>Check interval: Every {site.checkInterval} minutes</p>
+  </div>
+</div>
+
+<style>
+  /* Keep your existing styles and add these: */
+  .site-url {
+    font-size: 0.8rem;
+    color: #4a5568;
+    text-decoration: none;
+  }
+  
+  .site-url:hover {
+    text-decoration: underline;
+  }
+  
+  .unknown .status-badge {
+    background-color: #a0aec0;
+    color: white;
+  }
+</style>
