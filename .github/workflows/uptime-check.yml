@@ -10,65 +10,53 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
-      - name: Run uptime monitor
-        id: monitor
-        uses: fragmetal/uptime@main
-        with:
-          sites: |
-            https://example.com
-            https://your-other-site.com
-          data-file: 'src/lib/uptime-data.json'
-          
-      - name: Calculate uptime stats
-        if: always()
+      - name: Check websites
         run: |
+          # Create a simple uptime checker script
           node <<EOF
+          const axios = require('axios');
           const fs = require('fs');
-          const path = require('path');
           
-          const dataPath = path.join(process.env.GITHUB_WORKSPACE, 'src/lib/uptime-data.json');
-          const historyPath = path.join(process.env.GITHUB_WORKSPACE, 'src/lib/uptime-history.json');
+          const sites = [
+            'Power#3745',
+            'https://507ab6b2-a51f-490e-9363-960390d518db-00-3pgweb6uweae0.pike.replit.dev/'
+          ];
           
-          let currentData = require(dataPath);
-          let historyData = fs.existsSync(historyPath) ? require(historyPath) : {};
+          const results = {};
           
-          // Update history for each site
-          Object.entries(currentData).forEach(([url, stats]) => {
-            if (!historyData[url]) {
-              historyData[url] = {
-                totalChecks: 0,
-                successfulChecks: 0,
-                history: []
+          async function checkSite(url) {
+            try {
+              const start = Date.now();
+              const response = await axios.get(url, { timeout: 5000 });
+              return {
+                up: response.status === 200,
+                ping: Date.now() - start,
+                time: new Date().toISOString()
+              };
+            } catch (error) {
+              return {
+                up: false,
+                ping: null,
+                time: new Date().toISOString()
               };
             }
-            
-            historyData[url].totalChecks += 1;
-            if (stats.up) historyData[url].successfulChecks += 1;
-            historyData[url].history.push({
-              time: stats.time,
-              up: stats.up,
-              ping: stats.ping
-            });
-            
-            // Keep only the last 100 entries
-            if (historyData[url].history.length > 100) {
-              historyData[url].history.shift();
-            }
-            
-            // Add uptime percentage to current data
-            currentData[url].uptimePercentage = Math.round(
-              (historyData[url].successfulChecks / historyData[url].totalChecks) * 100
-            );
-          });
+          }
           
-          fs.writeFileSync(dataPath, JSON.stringify(currentData, null, 2));
-          fs.writeFileSync(historyPath, JSON.stringify(historyData, null, 2));
+          (async () => {
+            for (const url of sites) {
+              results[url] = await checkSite(url);
+            }
+            fs.writeFileSync('src/lib/uptime-data.json', JSON.stringify(results, null, 2));
+          })();
           EOF
+          
+      - name: Install dependencies
+        run: npm install axios
       
       - name: Commit and push changes
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
-          git add src/lib/uptime-*.json
+          git add src/lib/uptime-data.json
           git commit -m "Update uptime data [skip ci]" || exit 0
           git push
