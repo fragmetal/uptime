@@ -6,11 +6,6 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    # Add environment name if you have deployment protection
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    
     steps:
       - uses: actions/checkout@v3
       
@@ -25,8 +20,9 @@ jobs:
       - name: Build
         run: npm run build
           
-      - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@v4
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          branch: main  # Deploy to main branch
-          folder: dist
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          publish_branch: gh-pages  # Deploy to gh-pages branch
