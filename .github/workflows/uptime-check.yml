@@ -1,0 +1,83 @@
+name: Uptime Check
+on:
+  schedule:
+    - cron: '*/15 * * * *'  # Runs every 15 minutes
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Install dependencies
+        run: npm install axios
+      
+      - name: Run uptime checks
+        id: uptime
+        run: |
+          node <<EOF
+          const axios = require('axios');
+          const fs = require('fs');
+          const path = require('path');
+          
+          const dataPath = path.join(process.env.GITHUB_WORKSPACE, 'src/lib/uptime-data.json');
+          let data = require(dataPath);
+          
+          const sites = [
+            { name: "Power#3745", url: "https://507ab6b2-a51f-490e-9363-960390d518db-00-3pgweb6uweae0.pike.replit.dev/" },
+            // Add more sites here
+          ];
+          
+          async function checkSite(site) {
+            const start = Date.now();
+            try {
+              const response = await axios.get(site.url, { timeout: 5000 });
+              return {
+                ...site,
+                status: response.status === 200 ? 'up' : 'down',
+                responseTime: Date.now() - start,
+                lastChecked: new Date().toISOString()
+              };
+            } catch (error) {
+              return {
+                ...site,
+                status: 'down',
+                responseTime: null,
+                lastChecked: new Date().toISOString()
+              };
+            }
+          }
+          
+          (async () => {
+            const results = await Promise.all(sites.map(checkSite));
+            
+            // Calculate uptime percentages (simplified)
+            data.sites = results.map(result => {
+              const existing = data.sites.find(s => s.url === result.url) || {};
+              const totalChecks = (existing.totalChecks || 0) + 1;
+              const successfulChecks = existing.status === 'up' 
+                ? (existing.successfulChecks || 0) + 1 
+                : (existing.successfulChecks || 0);
+              
+              return {
+                ...existing,
+                ...result,
+                totalChecks,
+                successfulChecks,
+                uptimePercentage: Math.round((successfulChecks / totalChecks) * 100),
+              };
+            });
+            
+            data.lastUpdated = new Date().toISOString();
+            fs.writeFileSync(dataPath, JSON.stringify(data, null, 2));
+          })();
+          EOF
+      
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git add src/lib/uptime-data.json
+          git commit -m "Update uptime data [skip ci]" || exit 0
+          git push
