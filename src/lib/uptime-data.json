@@ -6,16 +6,21 @@
       "checkInterval": 5,
       "status": "up",
       "uptime": 100,
-      "responseTime": 1088,
-      "lastChecked": "2025-07-16T09:25:45.902Z",
+      "responseTime": 1051,
+      "lastChecked": "2025-07-16T09:34:25.649Z",
       "history": [
         {
           "timestamp": "2025-07-16T09:25:45.902Z",
           "status": "up",
           "responseTime": 1088
+        },
+        {
+          "timestamp": "2025-07-16T09:34:25.649Z",
+          "status": "up",
+          "responseTime": 1051
         }
       ]
     }
   ],
-  "lastUpdated": "2025-07-16T09:25:45.902Z"
+  "lastUpdated": "2025-07-16T09:34:25.649Z"
 }
