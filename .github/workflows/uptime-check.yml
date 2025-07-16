@@ -1,19 +1,22 @@
 name: Uptime Check
 on:
   schedule:
-    - cron: '*/5 * * * *' # Every 5 minutes
+    - cron: '*/5 * * * *'
   workflow_dispatch:
 
 jobs:
   check:
     runs-on: ubuntu-latest
     permissions:
-      contents: write  # Add this to enable pushing
+      contents: write
+      pages: write
+      id-token: write
+    
     steps:
       - uses: actions/checkout@v3
         with:
-          fetch-depth: 0  # Needed to make git history available
-          token: ${{ secrets.GITHUB_TOKEN }}  # Explicitly pass the token
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
@@ -33,3 +36,8 @@ jobs:
           git add src/lib/uptime-data.json
           git commit -m "Update uptime data [skip ci]" || echo "No changes to commit"
           git push origin HEAD:main
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
