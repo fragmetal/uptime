@@ -11,7 +11,6 @@
   },
   "dependencies": {
     "axios": "^1.6.2",
-    "fz": "^1.0.0",
     "@tailwindcss/vite": "^4.1.11",
     "astro": "^5.11.0",
     "tailwindcss": "^4.1.11"
