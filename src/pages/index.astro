@@ -1,0 +1,45 @@
+---
+import { fetchUptimeData } from '../lib/github';
+const uptimeData = await fetchUptimeData();
+---
+
+<html lang="en">
+<head>
+  <title>Uptime Monitor</title>
+</head>
+<body>
+  <h1>Uptime Status</h1>
+  
+  <div class="sites">
+    {uptimeData?.sites.map(site => (
+      <div class={`site ${site.status}`}>
+        <h2>{site.name}</h2>
+        <p>URL: <a href={site.url} target="_blank">{site.url}</a></p>
+        <p>Status: <span class="status">{site.status.toUpperCase()}</span></p>
+        <p>Last checked: {new Date(site.lastChecked).toLocaleString()}</p>
+        {site.responseTime && <p>Response time: {site.responseTime}ms</p>}
+      </div>
+    ))}
+  </div>
+</body>
+</html>
+
+<style>
+  .site {
+    padding: 1rem;
+    margin: 1rem 0;
+    border-radius: 4px;
+  }
+  .up {
+    background: #e6f7e6;
+    border: 1px solid #2ecc40;
+  }
+  .down {
+    background: #ffebeb;
+    border: 1px solid #ff4136;
+  }
+  .status {
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+</style>
