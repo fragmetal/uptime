@@ -4,10 +4,10 @@
       "name": "Power#3745",
       "url": "https://507ab6b2-a51f-490e-9363-960390d518db-00-3pgweb6uweae0.pike.replit.dev/",
       "checkInterval": 5,
-      "status": "down",
-      "uptime": 49.12,
-      "responseTime": -1,
-      "lastChecked": "2025-07-17T09:51:56.756Z",
+      "status": "up",
+      "uptime": 50,
+      "responseTime": 1066,
+      "lastChecked": "2025-07-17T10:15:18.111Z",
       "history": [
         {
           "timestamp": "2025-07-16T09:25:45.902Z",
@@ -293,9 +293,14 @@
           "timestamp": "2025-07-17T09:51:56.756Z",
           "status": "down",
           "responseTime": -1
+        },
+        {
+          "timestamp": "2025-07-17T10:15:18.111Z",
+          "status": "up",
+          "responseTime": 1066
         }
       ]
     }
   ],
-  "lastUpdated": "2025-07-17T09:51:56.756Z"
+  "lastUpdated": "2025-07-17T10:15:18.112Z"
 }
