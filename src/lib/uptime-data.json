@@ -5,9 +5,9 @@
       "url": "https://507ab6b2-a51f-490e-9363-960390d518db-00-3pgweb6uweae0.pike.replit.dev/",
       "checkInterval": 5,
       "status": "up",
-      "uptime": 60,
-      "responseTime": 1061,
-      "lastChecked": "2025-07-17T17:20:39.930Z",
+      "uptime": 60.53,
+      "responseTime": 967,
+      "lastChecked": "2025-07-17T17:42:01.509Z",
       "history": [
         {
           "timestamp": "2025-07-16T09:25:45.902Z",
@@ -383,9 +383,14 @@
           "timestamp": "2025-07-17T17:20:39.930Z",
           "status": "up",
           "responseTime": 1061
+        },
+        {
+          "timestamp": "2025-07-17T17:42:01.509Z",
+          "status": "up",
+          "responseTime": 967
         }
       ]
     }
   ],
-  "lastUpdated": "2025-07-17T17:20:39.930Z"
+  "lastUpdated": "2025-07-17T17:42:01.510Z"
 }
