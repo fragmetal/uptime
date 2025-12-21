@@ -7,13 +7,8 @@
       "status": "down",
       "uptime": 0,
       "responseTime": -1,
-      "lastChecked": "2025-12-21T07:50:48.083Z",
+      "lastChecked": "2025-12-21T08:14:22.983Z",
       "history": [
-        {
-          "timestamp": "2025-12-19T18:40:23.584Z",
-          "status": "down",
-          "responseTime": -1
-        },
         {
           "timestamp": "2025-12-19T18:58:30.132Z",
           "status": "down",
@@ -508,9 +503,14 @@
           "timestamp": "2025-12-21T07:50:48.083Z",
           "status": "down",
           "responseTime": -1
+        },
+        {
+          "timestamp": "2025-12-21T08:14:22.983Z",
+          "status": "down",
+          "responseTime": -1
         }
       ]
     }
   ],
-  "lastUpdated": "2025-12-21T07:50:48.083Z"
+  "lastUpdated": "2025-12-21T08:14:22.983Z"
 }
